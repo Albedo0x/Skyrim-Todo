@@ -1,0 +1,44 @@
+//compress: false
+
+@import "./TaskList/TaskComponent.less";
+@import "./TaskList/TaskList.less";
+@import "./TodoList/TodoHeader.less";
+@import "./TodoList/TodoItem.less";
+@import "./TodoList/TodoList.less";
+@import "./TodoList/TodoBody.less";
+@import "./TodoInfo/TodoInfo.less";
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Roboto Condensed", sans-serif;
+}
+
+#root {
+  display: grid;
+  font-size: 34px;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+    url("../images/forest.jpg");
+  background-size: cover;
+  justify-items: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.App {
+  display: grid;
+  grid-template-areas:
+    "head head"
+    "sidebar main";
+  grid-template-columns: 2fr 6fr;
+  grid-template-rows: 100px 7fr;
+  grid-gap: 5px;
+  grid-row-gap: 30px;
+  width: 90%;
+  max-width: 1600px;
+  height: 90vh;
+  color: white;
+}
