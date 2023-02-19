@@ -1,12 +1,17 @@
 //compress: false
 
-@import "./TaskList/TaskComponent.less";
-@import "./TaskList/TaskList.less";
-@import "./TodoList/TodoHeader.less";
-@import "./TodoList/TodoItem.less";
-@import "./TodoList/TodoList.less";
-@import "./TodoList/TodoBody.less";
-@import "./TodoInfo/TodoInfo.less";
+@import "./Header/TodoInfo.less";
+@import "./SideBar/TodoSideBar.less";
+@import "./SideBar/TodoComponent.less";
+@import "./SideBar/TodoList.less";
+@import "./SideBar/TodoInput.less";
+@import "./MainBody/TodoBody.less";
+@import "./MainBody/TodoContent.less";
+@import "./MainBody/TodoHeader.less";
+@import "./MainBody/TodoInput.less";
+@import "./MainBody/TodoItem.less";
+@import "./MainBody/TodoItemList.less";
+@import "./MainBody/TodoHome.less";
 
 * {
   margin: 0;
@@ -39,6 +44,8 @@ body {
   grid-row-gap: 30px;
   width: 90%;
   max-width: 1600px;
+  min-width: 600px;
   height: 90vh;
+  min-height: 1000px;
   color: white;
 }

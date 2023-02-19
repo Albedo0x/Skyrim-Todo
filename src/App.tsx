@@ -1,9 +1,7 @@
 import { useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
-import TaskList from "./components/TaskList/TaskList";
-import TodoInfo from "./components/TodoInfo/TodoInfo";
-import TodoHome from "./components/TodoList/TodoHome";
-import TodoList from "./components/TodoList/TodoList";
+import { TodoSideBar } from "./components/SideBar/TodoSideBar";
+import { TodoInfo } from "./components/Header/TodoInfo";
+import { TodoBodyList } from "./components/MainBody/TodoBodyList";
 import { useAppSelector } from "./toolkit/toolkit";
 
 function App(): JSX.Element {
@@ -16,18 +14,8 @@ function App(): JSX.Element {
   return (
     <div className="App">
       <TodoInfo />
-      <TaskList />
-      <Routes>
-        <Route key={Math.random() / 2} path="/" element={<TodoHome />} />
-        {store &&
-          store.map((todo, index) => (
-            <Route
-              key={todo.todoId}
-              path={`/${todo.todoName}`}
-              element={<TodoList todo={todo} index={index} />}
-            />
-          ))}
-      </Routes>
+      <TodoSideBar />
+      <TodoBodyList store={store} />
     </div>
   );
 }

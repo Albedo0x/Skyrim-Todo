@@ -1,0 +1,42 @@
+//main: "../index.less"
+
+.TodoComponent {
+  display: flex;
+  width: 100%;
+  height: 50px;
+  text-transform: uppercase;
+
+  &-checked {
+    text-decoration: line-through 4px;
+  }
+
+  &-Link {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &-Name {
+    margin-right: 10px;
+  }
+  a {
+    text-decoration: none;
+    color: white;
+
+    &:hover {
+      text-decoration: none;
+      color: white;
+    }
+    &:active {
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+    }
+  }
+  .active {
+    font-size: 26px;
+    font-weight: bold;
+  }
+}

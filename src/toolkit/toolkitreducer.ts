@@ -7,9 +7,9 @@ const toolkitSlice = createSlice({
   name: "tookit",
   initialState,
   reducers: {
-    addTodo(state, action: PayloadAction<{ idOfTodo: string; value: string }>) {
+    addTodo(state, action: PayloadAction<{ id: string; value: string }>) {
       state.push({
-        todoId: `${action.payload.idOfTodo}-${Date.now()}`,
+        todoId: `${action.payload.id}-${Date.now()}`,
         todoName: `${action.payload.value}`,
         todoDescription: `This is ${action.payload.value} to do`,
         todoStatus: false,
@@ -39,16 +39,13 @@ const toolkitSlice = createSlice({
         value: string;
       }>
     ) {
-      state.map((elem) => {
-        if (elem.todoId === action.payload.taskId) {
-          elem.todos.push({
-            id: Date.now() / 2,
-            status: false,
-            text: action.payload.value,
-          });
-        }
-        return elem;
-      });
+      state
+        .find((elem) => elem.todoId === action.payload.taskId)!
+        .todos.push({
+          id: Date.now() / 2,
+          status: false,
+          text: action.payload.value,
+        });
     },
     deleteItem(
       state,
