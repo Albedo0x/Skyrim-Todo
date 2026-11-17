@@ -1,7 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppState } from "../interface/interfaces";
 
-const initialState: AppState = JSON.parse(localStorage.getItem("test") || "");
+const initialState: AppState = (() => {
+  try {
+    const savedState = localStorage.getItem("test");
+    return savedState ? (JSON.parse(savedState) as AppState) : [];
+  } catch (error) {
+    console.error("Could not read the saved quest journal. Starting with an empty journal.", error);
+    return [];
+  }
+})();
 
 const toolkitSlice = createSlice({
   name: "tookit",
@@ -10,7 +18,7 @@ const toolkitSlice = createSlice({
     addTodo(state, action: PayloadAction<{ id: string; value: string }>) {
       state.push({
         todoId: `${action.payload.id}-${Date.now()}`,
-        todoName: `${action.payload.value}`,
+        todoName: action.payload.value,
         todoDescription: `This is ${action.payload.value} to do`,
         todoStatus: false,
         todos: [],
@@ -19,101 +27,41 @@ const toolkitSlice = createSlice({
     removeTodo(state, action: PayloadAction<{ taskId: string }>) {
       return state.filter((todo) => todo.todoId !== action.payload.taskId);
     },
-    checkTodo(
-      state,
-      action: PayloadAction<{
-        todoId: string;
-      }>
-    ) {
-      state.map((elem) => {
-        if (elem.todoId === action.payload.todoId) {
-          elem.todoStatus = !elem.todoStatus;
-        }
-        return elem;
-      });
+    checkTodo(state, action: PayloadAction<{ todoId: string }>) {
+      const quest = state.find((item) => item.todoId === action.payload.todoId);
+      if (quest) quest.todoStatus = !quest.todoStatus;
     },
-    addItem(
-      state,
-      action: PayloadAction<{
-        taskId: string;
-        value: string;
-      }>
-    ) {
-      state
-        .find((elem) => elem.todoId === action.payload.taskId)!
-        .todos.push({
-          id: Date.now() / 2,
+    addItem(state, action: PayloadAction<{ taskId: string; value: string }>) {
+      const quest = state.find((item) => item.todoId === action.payload.taskId);
+      if (quest && action.payload.value.trim()) {
+        quest.todos.push({
+          id: Date.now(),
           status: false,
-          text: action.payload.value,
+          text: action.payload.value.trim(),
         });
+      }
     },
-    deleteItem(
-      state,
-      action: PayloadAction<{
-        todoId: string;
-        taskId: number;
-      }>
-    ) {
-      state.map((elem) => {
-        if (elem.todoId === action.payload.todoId) {
-          elem.todos.splice(
-            elem.todos.findIndex((item) => item.id === action.payload.taskId),
-            1
-          );
-        }
-        return elem;
-      });
+    deleteItem(state, action: PayloadAction<{ todoId: string; taskId: number }>) {
+      const quest = state.find((item) => item.todoId === action.payload.todoId);
+      if (quest) {
+        quest.todos = quest.todos.filter((item) => item.id !== action.payload.taskId);
+      }
     },
-    checkItem(
-      state,
-      action: PayloadAction<{
-        todoId: string;
-        taskId: number;
-      }>
-    ) {
-      state.map((elem) => {
-        if (elem.todoId === action.payload.todoId) {
-          elem.todos.map((todo, index) => {
-            if (todo.id === action.payload.taskId) {
-              todo.status = !todo.status;
-              elem.todos.splice(index, 1);
-              if (todo.status) {
-                elem.todos.push({
-                  id: Date.now() / 2,
-                  status: todo.status,
-                  text: todo.text,
-                });
-              } else {
-                elem.todos.unshift({
-                  id: Date.now() / 2,
-                  status: todo.status,
-                  text: todo.text,
-                });
-              }
-            }
-            return todo;
-          });
-        }
-        return elem;
-      });
+    checkItem(state, action: PayloadAction<{ todoId: string; taskId: number }>) {
+      const quest = state.find((item) => item.todoId === action.payload.todoId);
+      if (!quest) return;
+      const index = quest.todos.findIndex((item) => item.id === action.payload.taskId);
+      if (index === -1) return;
+      const [task] = quest.todos.splice(index, 1);
+      task.status = !task.status;
+      if (task.status) quest.todos.push(task);
+      else quest.todos.unshift(task);
     },
-    editHeader(
-      state,
-      action: PayloadAction<{
-        todoId: number;
-        valueName: string;
-      }>
-    ) {
-      state[action.payload.todoId].todoName = action.payload.valueName;
+    editHeader(state, action: PayloadAction<{ todoId: number; valueName: string }>) {
+      if (state[action.payload.todoId]) state[action.payload.todoId].todoName = action.payload.valueName;
     },
-    editDescription(
-      state,
-      action: PayloadAction<{
-        todoId: number;
-        valueDesc: string;
-      }>
-    ) {
-      state[action.payload.todoId].todoDescription = action.payload.valueDesc;
+    editDescription(state, action: PayloadAction<{ todoId: number; valueDesc: string }>) {
+      if (state[action.payload.todoId]) state[action.payload.todoId].todoDescription = action.payload.valueDesc;
     },
   },
 });
@@ -125,6 +73,7 @@ export const {
   addItem,
   deleteItem,
   checkItem,
+  checkTodo,
   editHeader,
   editDescription,
 } = toolkitSlice.actions;
