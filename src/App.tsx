@@ -7,7 +7,9 @@ import { useAppSelector } from "./toolkit/toolkit";
 type JournalTab = "quests" | "stats" | "system";
 
 function App(): JSX.Element {
-  const store = useAppSelector((state) => state.tasks);
+  const selectedStore = useAppSelector((state) => state.tasks);
+  // Protect the UI from malformed or legacy local state while it is being migrated.
+  const store = Array.isArray(selectedStore) ? selectedStore : [];
   const [activeTab, setActiveTab] = useState<JournalTab>("quests");
 
   useEffect(() => {
