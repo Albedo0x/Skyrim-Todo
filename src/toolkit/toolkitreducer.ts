@@ -4,7 +4,9 @@ import { AppState } from "../interface/interfaces";
 const initialState: AppState = (() => {
   try {
     const savedState = localStorage.getItem("test");
-    return savedState ? (JSON.parse(savedState) as AppState) : [];
+    if (!savedState) return [];
+    const parsed: unknown = JSON.parse(savedState);
+    return Array.isArray(parsed) ? (parsed as AppState) : [];
   } catch (error) {
     console.error("Could not read the saved quest journal. Starting with an empty journal.", error);
     return [];
