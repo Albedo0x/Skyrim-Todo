@@ -170,3 +170,147 @@ button, input, textarea { font: inherit; }
   .StatsGrid { grid-template-columns: 1fr; gap: 10px; }
   .StatCard { min-height: 95px; }
 }
+
+
+/* --- Skyrim journal refinement: typography, carved corners and quest markers --- */
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Oswald:wght@400;500;600;700&display=swap");
+
+body, button, input, textarea {
+  font-family: "Oswald", "Roboto Condensed", "Arial Narrow", sans-serif;
+}
+.JournalNav-button,
+.TodoHeader-Name,
+.JournalPanel-heading h2,
+.SystemTitle {
+  font-family: "Cinzel", "Times New Roman", serif;
+  letter-spacing: .045em;
+}
+
+/* Fine double-line frames with restrained Nordic-style corner marks. */
+.TodoSideBar, .TodoBody, .TodoHome, .JournalPanel {
+  border-color: rgba(224, 219, 204, .88);
+  box-shadow: inset 0 0 0 2px rgba(0,0,0,.72), 0 0 0 1px rgba(0,0,0,.85);
+}
+.TodoSideBar::after, .TodoBody::after, .TodoHome::after, .JournalPanel::after {
+  content: "";
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(var(--journal-white), var(--journal-white)) left 7px top 7px / 22px 1px no-repeat,
+    linear-gradient(var(--journal-white), var(--journal-white)) left 7px top 7px / 1px 22px no-repeat,
+    linear-gradient(var(--journal-white), var(--journal-white)) right 7px top 7px / 22px 1px no-repeat,
+    linear-gradient(var(--journal-white), var(--journal-white)) right 7px top 7px / 1px 22px no-repeat,
+    linear-gradient(var(--journal-white), var(--journal-white)) left 7px bottom 7px / 22px 1px no-repeat,
+    linear-gradient(var(--journal-white), var(--journal-white)) left 7px bottom 7px / 1px 22px no-repeat,
+    linear-gradient(var(--journal-white), var(--journal-white)) right 7px bottom 7px / 22px 1px no-repeat,
+    linear-gradient(var(--journal-white), var(--journal-white)) right 7px bottom 7px / 1px 22px no-repeat;
+  opacity: .72;
+}
+.TodoInfo {
+  border-color: rgba(232,227,213,.94);
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,.8), 0 0 0 1px rgba(0,0,0,.9);
+}
+.TodoInfo::before, .TodoInfo::after {
+  content: "❖";
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  color: var(--journal-white);
+  font-family: Georgia, serif;
+  font-size: 19px;
+  line-height: 1;
+  transform: translateY(-50%);
+  text-shadow: 0 1px 3px #000;
+}
+.TodoInfo::before { left: 13px; }
+.TodoInfo::after { right: 13px; }
+
+/* The selected quest is marked like the active entry in the game journal. */
+.TodoComponent-Link.active .TodoComponent-Name {
+  color: #fff;
+  text-shadow: 0 0 8px rgba(255,255,255,.5);
+}
+.TodoComponent-Link.active .TodoComponent-Name::before {
+  content: "◆";
+  display: inline-block;
+  margin-right: 7px;
+  color: var(--journal-white);
+  font-size: .78em;
+  vertical-align: 1px;
+}
+.TodoComponent-Link:not(.active):hover .TodoComponent-Name::before {
+  content: "◇";
+  display: inline-block;
+  margin-right: 7px;
+  color: var(--journal-muted);
+  font-size: .78em;
+  vertical-align: 1px;
+}
+.TodoList { scrollbar-color: rgba(190,185,170,.65) rgba(0,0,0,.25); scrollbar-width: thin; }
+.TodoItemList { scrollbar-color: rgba(190,185,170,.65) rgba(0,0,0,.25); scrollbar-width: thin; }
+.TodoItem-checkbox_checkbox + label::before {
+  content: "◇";
+  font-size: 24px;
+  text-shadow: 0 0 5px rgba(255,255,255,.18);
+}
+.TodoItem-checkbox_checkbox:checked + label::before {
+  content: "◆";
+  text-shadow: 0 0 7px rgba(200,181,138,.35);
+}
+.TodoItem, .TodoItem-checked {
+  min-height: 40px;
+  letter-spacing: .01em;
+}
+.TodoItem:hover, .TodoItem-checked:hover {
+  background: linear-gradient(90deg, transparent, rgba(230,225,210,.07), transparent);
+}
+.TodoInput input[type="text"] {
+  font-family: "Oswald", "Roboto Condensed", sans-serif;
+  letter-spacing: .035em;
+}
+.TodoInput input[type="text"]:focus {
+  box-shadow: 0 3px 7px -6px #fff;
+}
+.TodoHeader-Head {
+  position: relative;
+  padding-bottom: 10px;
+}
+.TodoHeader-Head::after {
+  content: "◆ ───────────────────────── ◆";
+  position: absolute;
+  left: 50%;
+  bottom: -2px;
+  width: min(72%, 430px);
+  overflow: hidden;
+  color: rgba(232,227,213,.55);
+  font-family: Georgia, serif;
+  font-size: 10px;
+  letter-spacing: .16em;
+  text-align: center;
+  white-space: nowrap;
+  transform: translateX(-50%);
+}
+.TodoHeader-Description {
+  color: rgba(232,227,213,.82);
+  font-style: italic;
+}
+.JournalPanel-heading {
+  position: relative;
+  padding-bottom: 13px;
+}
+.JournalPanel-heading::after {
+  content: "◇ ───────────────────────────── ◇";
+  position: absolute;
+  bottom: -8px;
+  color: rgba(232,227,213,.5);
+  font-family: Georgia, serif;
+  font-size: 11px;
+  letter-spacing: .14em;
+}
+@media (max-width: 760px) {
+  .TodoInfo::before { left: 5px; }
+  .TodoInfo::after { right: 5px; }
+  .TodoHeader-Head::after { width: 80%; }
+}
