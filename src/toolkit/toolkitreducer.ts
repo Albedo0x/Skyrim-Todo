@@ -6,7 +6,16 @@ const initialState: AppState = (() => {
     const savedState = localStorage.getItem("test");
     if (!savedState) return [];
     const parsed: unknown = JSON.parse(savedState);
-    return Array.isArray(parsed) ? (parsed as AppState) : [];
+    return Array.isArray(parsed)
+      ? (parsed as AppState).map((quest) => {
+          const todos = Array.isArray(quest.todos) ? quest.todos : [];
+          return {
+            ...quest,
+            todos,
+            todoStatus: todos.length > 0 && todos.every((item) => item.status),
+          };
+        })
+      : [];
   } catch (error) {
     console.error("Could not read the saved quest journal. Starting with an empty journal.", error);
     return [];
@@ -41,12 +50,15 @@ const toolkitSlice = createSlice({
           status: false,
           text: action.payload.value.trim(),
         });
+        quest.todoStatus = false;
       }
     },
     deleteItem(state, action: PayloadAction<{ todoId: string; taskId: number }>) {
       const quest = state.find((item) => item.todoId === action.payload.todoId);
       if (quest) {
         quest.todos = quest.todos.filter((item) => item.id !== action.payload.taskId);
+        quest.todoStatus =
+          quest.todos.length > 0 && quest.todos.every((item) => item.status);
       }
     },
     checkItem(state, action: PayloadAction<{ todoId: string; taskId: number }>) {
@@ -58,6 +70,9 @@ const toolkitSlice = createSlice({
       task.status = !task.status;
       if (task.status) quest.todos.push(task);
       else quest.todos.unshift(task);
+      // A quest is complete only when it has at least one objective and all are done.
+      quest.todoStatus =
+        quest.todos.length > 0 && quest.todos.every((item) => item.status);
     },
     editHeader(state, action: PayloadAction<{ todoId: number; valueName: string }>) {
       if (state[action.payload.todoId]) state[action.payload.todoId].todoName = action.payload.valueName;
