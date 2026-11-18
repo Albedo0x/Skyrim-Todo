@@ -314,3 +314,63 @@ body, button, input, textarea {
   .TodoInfo::after { right: 5px; }
   .TodoHeader-Head::after { width: 80%; }
 }
+
+
+/* Layout pass: bring quest objectives closer to the title, as in Skyrim. */
+.TodoBody {
+  grid-template-rows: minmax(170px, 23%) minmax(0, 1fr);
+}
+.TodoHeader {
+  padding-top: 12px;
+  padding-bottom: 4px;
+}
+.TodoHeader-Head {
+  min-height: 40px;
+}
+.TodoHeader-Text {
+  min-height: 42px;
+  padding-top: 5px;
+  padding-bottom: 4px;
+}
+.TodoContent {
+  width: min(820px, 88%);
+  padding-top: 0;
+  align-content: start;
+}
+.TodoContent > .TodoInput {
+  margin-bottom: 7px;
+}
+.TodoItemList {
+  padding-top: 0;
+  gap: 1px;
+}
+.TodoItem-checkbox_checkbox + label::before {
+  flex-basis: 24px;
+  width: 24px;
+  margin-right: 7px;
+  color: rgba(239, 235, 222, .9);
+  font-size: 23px;
+}
+.TodoItem-checkbox_checkbox:checked + label::before {
+  color: var(--journal-gold);
+}
+.TodoComponent {
+  min-height: 31px;
+}
+.TodoComponent-Name {
+  padding: 3px 6px;
+}
+.TodoComponent-Link.active .TodoComponent-Name {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.055));
+}
+.TodoSideBar-Container {
+  padding-top: 18px;
+}
+@media (max-width: 760px) {
+  .TodoBody {
+    grid-template-rows: minmax(150px, 25%) minmax(0, 1fr);
+  }
+  .TodoContent {
+    width: 94%;
+  }
+}
