@@ -30,7 +30,7 @@ export const TodoComponent = ({ text, id }: { text: string; id: string }) => {
       onMouseEnter={() => setIsShown(true)}
       onMouseLeave={() => setIsShown(false)}
     >
-      <NavLink className="TodoComponent-Link" to={`/${text}`}>
+      <NavLink className={({ isActive }) => `TodoComponent-Link${isActive ? " active" : ""}`} to={`/${text}`}>
         {({ isActive }) => {
           return isActive && isShown ? (
             <>
