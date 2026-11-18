@@ -22,7 +22,7 @@ export const TodoComponent = ({ text, id, completed = false }: { text: string; i
 
   return (
     <li
-      className="TodoComponent"
+      className={`TodoComponent${completed ? " TodoComponent-completed" : ""}`}
       onMouseEnter={() => setIsShown(true)}
       onMouseLeave={() => setIsShown(false)}
     >
