@@ -461,3 +461,35 @@ body {
   .QuestGroup-title { font-size: 9px; }
   .QuestGroups { gap: 12px; }
 }
+
+
+/* Skyrim-style condensed UI type: closest practical web-safe match to Futura Condensed. */
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;500;700&family=Cinzel:wght@500;600;700&display=swap");
+body, button, input, textarea, .TodoList, .TodoItem, .TodoItem-checked {
+  font-family: "Roboto Condensed", "Arial Narrow", sans-serif;
+  font-weight: 400;
+  letter-spacing: .015em;
+}
+.TodoList, .TodoItem, .TodoItem-checked, .TodoComponent-Name, .TodoInput input[type="text"] {
+  font-size: clamp(15px, 1.32vw, 19px);
+}
+.TodoHeader-Description, .TodoHeader-Text {
+  font-family: "Roboto Condensed", "Arial Narrow", sans-serif;
+  font-weight: 300;
+}
+.JournalNav-button, .JournalPanel-heading h2, .SystemTitle, .QuestGroup-title {
+  font-family: "Cinzel", Georgia, serif;
+}
+
+/* Quest completion progress indicator */
+.QuestProgress { width: min(760px, 88%); margin: 0 auto 16px; }
+.QuestProgress-meta { display:flex; justify-content:space-between; gap:10px; margin:0 4px 5px; color:rgba(232,227,213,.68); font-size:12px; letter-spacing:.08em; text-transform:uppercase; }
+.QuestProgress-track { height:4px; background:rgba(232,227,213,.12); border:1px solid rgba(232,227,213,.16); }
+.QuestProgress-fill { height:100%; background:linear-gradient(90deg, #897958, #d3c39b); transition:width .25s ease; }
+.QuestProgress-complete .QuestProgress-fill { background:rgba(200,181,138,.85); }
+.StatsProgress { width:75%; max-width:620px; margin:26px auto 0; }
+.StatsProgress-label { display:flex; justify-content:space-between; margin-bottom:6px; color:var(--journal-muted); font-size:12px; letter-spacing:.09em; text-transform:uppercase; }
+.StatsProgress-track { height:5px; background:rgba(232,227,213,.12); border:1px solid rgba(232,227,213,.14); }
+.StatsProgress-fill { height:100%; background:linear-gradient(90deg,#897a57,#d0bd92); }
+.StatCard { padding:16px 10px; transition:background .2s ease,border-color .2s ease; }
+.StatCard:hover { background:rgba(255,255,255,.035); border-color:rgba(200,181,138,.5); }
