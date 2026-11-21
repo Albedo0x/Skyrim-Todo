@@ -14,19 +14,12 @@ export const TodoItem = ({
 }): JSX.Element => {
   const [isActive, setIsActive] = useState<boolean>(false);
   const dispatch = useAppDispatch();
-  const cls: [string] = ["TodoItem"];
+  const cls = ["TodoItem"];
 
-  if (task.status) {
-    cls.push("-checked");
-  }
+  if (task.status) cls.push("-checked");
 
   function deleteItemRedux(): void {
-    dispatch(
-      deleteItem({
-        todoId: otherId,
-        taskId: task.id,
-      })
-    );
+    dispatch(deleteItem({ todoId: otherId, taskId: task.id }));
   }
 
   return (
@@ -35,17 +28,8 @@ export const TodoItem = ({
       onMouseEnter={() => setIsActive(true)}
       onMouseLeave={() => setIsActive(false)}
     >
-      {isActive ? (
-        <>
-          <TodoItemCheckBox task={task} otherId={otherId} />
-          <TodoRemoveComponent removeTodo={deleteItemRedux} />
-        </>
-      ) : (
-        <>
-          <TodoItemCheckBox task={task} otherId={otherId} />
-          <div></div>
-        </>
-      )}
+      <TodoItemCheckBox task={task} otherId={otherId} />
+      {isActive && <TodoRemoveComponent removeTodo={deleteItemRedux} />}
     </div>
   );
 };

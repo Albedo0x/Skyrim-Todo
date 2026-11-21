@@ -4,33 +4,29 @@ import { TodoRemoveComponent } from "../Library/TodoRemoveComponent";
 import { removeTodo } from "../../toolkit/toolkitreducer";
 import { useAppDispatch, useAppSelector } from "../../toolkit/toolkit";
 
-export const TodoComponent = ({ text, id }: { text: string; id: string }) => {
+export const TodoComponent = ({ text, id, completed = false }: { text: string; id: string; completed?: boolean }) => {
   const [isShown, setIsShown] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const store = useAppSelector((state) => state.tasks);
 
   let prevTodo: string;
-  const cur = store.findIndex((item) => item.todoName === text);
-  if (cur > 0) {
-    prevTodo = store[cur - 1].todoName;
-  } else {
-    prevTodo = store[0].todoName;
-  }
+  const cur = store.findIndex((item) => item.todoId === id);
+  prevTodo = cur > 0 ? store[cur - 1].todoName : (store[1]?.todoName ?? "");
 
   function removeTodoRedux(event: React.MouseEvent<HTMLDivElement>) {
     event.preventDefault();
     dispatch(removeTodo({ taskId: id }));
-    navigate(`/${prevTodo}`);
+    navigate(prevTodo ? `/${prevTodo}` : "/");
   }
 
   return (
     <li
-      className="TodoComponent"
+      className={`TodoComponent${completed ? " TodoComponent-completed" : ""}`}
       onMouseEnter={() => setIsShown(true)}
       onMouseLeave={() => setIsShown(false)}
     >
-      <NavLink className="TodoComponent-Link" to={`/${text}`}>
+      <NavLink className={({ isActive }) => `TodoComponent-Link${isActive ? " active" : ""}`} to={`/${text}`}>
         {({ isActive }) => {
           return isActive && isShown ? (
             <>

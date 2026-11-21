@@ -1,11 +1,16 @@
 export const TodoHome = (): JSX.Element => {
   return (
     <div className="TodoHome">
-      This is the home page. At the begining there are no tasks for you.
-      <br></br>
-      <br></br>- To add firt TODO create new one in the sidebar using input.
-      <br></br>- Then you will be redirected to just created TODO, where you can
-      change name or desctiption by double clicking on it.
+      <div className="TodoHome-content">
+        <div className="TodoHome-ornament" aria-hidden="true">◇ ─────── ◈ ─────── ◇</div>
+        <h1>NO ACTIVE QUEST</h1>
+        <p>Your journal is waiting for a new adventure.</p>
+        <p className="TodoHome-hint">
+          Create a quest in the left panel to begin your journey.
+          <br />
+          Select a quest to add and track its objectives.
+        </p>
+      </div>
     </div>
   );
 };
