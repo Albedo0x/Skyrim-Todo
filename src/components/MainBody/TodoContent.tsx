@@ -9,8 +9,13 @@ export const TodoContent = ({ todo }: { todo: TodoState }): JSX.Element => {
   return (
     <div className="TodoContent">
       <div className={`QuestProgress${percent === 100 && total > 0 ? " QuestProgress-complete" : ""}`}>
+        <div className="ObjectivesHeading" aria-label="Objectives">
+          <span className="ObjectivesFlourish" aria-hidden="true">᚜ ───── ◈</span>
+          <span className="ObjectivesTitle">OBJECTIVES</span>
+          <span className="ObjectivesFlourish" aria-hidden="true">◈ ───── ᚛</span>
+        </div>
         <div className="QuestProgress-meta">
-          <span>QUEST OBJECTIVES</span>
+          <span>QUEST PROGRESS</span>
           <span>{completed} / {total} · {percent}%</span>
         </div>
         <div className="QuestProgress-track" role="progressbar" aria-valuenow={percent} aria-valuemin={0} aria-valuemax={100}>
