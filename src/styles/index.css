@@ -492,3 +492,58 @@ body, button, input, textarea, .TodoList, .TodoItem, .TodoItem-checked {
 .StatsProgress-fill { height:100%; background:linear-gradient(90deg,#897a57,#d0bd92); }
 .StatCard { padding:16px 10px; transition:background .2s ease,border-color .2s ease; }
 .StatCard:hover { background:rgba(255,255,255,.035); border-color:rgba(200,181,138,.5); }
+
+
+/* Game-journal silhouette: beveled/cut corners rather than rectangular panel edges. */
+:root {
+  --journal-cut: 28px;
+  --journal-cut-small: 17px;
+}
+.TodoSideBar, .TodoBody, .TodoHome, .JournalPanel {
+  border: 0;
+  outline: 0;
+  clip-path: polygon(
+    0 var(--journal-cut), var(--journal-cut) 0,
+    calc(100% - var(--journal-cut)) 0, 100% var(--journal-cut),
+    100% calc(100% - var(--journal-cut)), calc(100% - var(--journal-cut)) 100%,
+    var(--journal-cut) 100%, 0 calc(100% - var(--journal-cut))
+  );
+  box-shadow: none;
+}
+.TodoSideBar::before, .TodoBody::before, .TodoHome::before, .JournalPanel::before {
+  inset: 4px;
+  border: 1px solid rgba(232,227,213,.5);
+  clip-path: polygon(
+    0 var(--journal-cut-small), var(--journal-cut-small) 0,
+    calc(100% - var(--journal-cut-small)) 0, 100% var(--journal-cut-small),
+    100% calc(100% - var(--journal-cut-small)), calc(100% - var(--journal-cut-small)) 100%,
+    var(--journal-cut-small) 100%, 0 calc(100% - var(--journal-cut-small))
+  );
+}
+.TodoSideBar::after, .TodoBody::after, .TodoHome::after, .JournalPanel::after {
+  background:
+    linear-gradient(var(--journal-white),var(--journal-white)) left 13px top 13px / 22px 1px no-repeat,
+    linear-gradient(var(--journal-white),var(--journal-white)) left 13px top 13px / 1px 14px no-repeat,
+    linear-gradient(var(--journal-white),var(--journal-white)) right 13px top 13px / 22px 1px no-repeat,
+    linear-gradient(var(--journal-white),var(--journal-white)) right 13px top 13px / 1px 14px no-repeat,
+    linear-gradient(var(--journal-white),var(--journal-white)) left 13px bottom 13px / 22px 1px no-repeat,
+    linear-gradient(var(--journal-white),var(--journal-white)) left 13px bottom 13px / 1px 14px no-repeat,
+    linear-gradient(var(--journal-white),var(--journal-white)) right 13px bottom 13px / 22px 1px no-repeat,
+    linear-gradient(var(--journal-white),var(--journal-white)) right 13px bottom 13px / 1px 14px no-repeat;
+  opacity: .5;
+}
+.TodoInfo {
+  border: 0;
+  outline: 0;
+  clip-path: polygon(
+    0 var(--journal-cut-small), var(--journal-cut-small) 0,
+    calc(100% - var(--journal-cut-small)) 0, 100% var(--journal-cut-small),
+    100% calc(100% - var(--journal-cut-small)), calc(100% - var(--journal-cut-small)) 100%,
+    var(--journal-cut-small) 100%, 0 calc(100% - var(--journal-cut-small))
+  );
+}
+.TodoInfo::before, .TodoInfo::after { font-size: 20px; }
+@media (max-width: 760px) {
+  :root { --journal-cut: 18px; --journal-cut-small: 12px; }
+  .TodoSideBar::before, .TodoBody::before, .TodoHome::before, .JournalPanel::before { inset: 3px; }
+}
