@@ -547,3 +547,60 @@ body, button, input, textarea, .TodoList, .TodoItem, .TodoItem-checked {
   :root { --journal-cut: 18px; --journal-cut-small: 12px; }
   .TodoSideBar::before, .TodoBody::before, .TodoHome::before, .JournalPanel::before { inset: 3px; }
 }
+
+/* Stronger, continuous beveled frame outlines */
+.TodoSideBar, .TodoBody, .TodoHome, .JournalPanel {
+  background-color: rgba(5,7,8,.92);
+  filter: drop-shadow(0 0 1px rgba(220,215,200,.24));
+}
+.TodoSideBar::before, .TodoBody::before, .TodoHome::before, .JournalPanel::before {
+  inset: 5px;
+  border: 1px solid rgba(220,215,200,.58);
+  background: transparent;
+  clip-path: polygon(
+    0 20px, 20px 0, calc(100% - 20px) 0, 100% 20px,
+    100% calc(100% - 20px), calc(100% - 20px) 100%,
+    20px 100%, 0 calc(100% - 20px)
+  );
+}
+.TodoSideBar::after, .TodoBody::after, .TodoHome::after, .JournalPanel::after {
+  opacity: .82;
+  background:
+    linear-gradient(var(--journal-white),var(--journal-white)) left 15px top 15px / 27px 1px no-repeat,
+    linear-gradient(var(--journal-white),var(--journal-white)) left 15px top 15px / 1px 18px no-repeat,
+    linear-gradient(var(--journal-white),var(--journal-white)) right 15px top 15px / 27px 1px no-repeat,
+    linear-gradient(var(--journal-white),var(--journal-white)) right 15px top 15px / 1px 18px no-repeat,
+    linear-gradient(var(--journal-white),var(--journal-white)) left 15px bottom 15px / 27px 1px no-repeat,
+    linear-gradient(var(--journal-white),var(--journal-white)) left 15px bottom 15px / 1px 18px no-repeat,
+    linear-gradient(var(--journal-white),var(--journal-white)) right 15px bottom 15px / 27px 1px no-repeat,
+    linear-gradient(var(--journal-white),var(--journal-white)) right 15px bottom 15px / 1px 18px no-repeat;
+}
+.ObjectivesHeading {
+  display:grid;
+  grid-template-columns:minmax(30px,1fr) auto minmax(30px,1fr);
+  align-items:center;
+  gap:12px;
+  width:100%;
+  margin:0 0 10px;
+  text-align:center;
+}
+.ObjectivesTitle {
+  font-family:"Cinzel", Georgia, serif;
+  font-size:clamp(16px,1.65vw,22px);
+  font-weight:600;
+  letter-spacing:.075em;
+  color:rgba(238,233,220,.92);
+}
+.ObjectivesFlourish {
+  color:rgba(200,181,138,.75);
+  font-family:Georgia,serif;
+  font-size:12px;
+  letter-spacing:.08em;
+  white-space:nowrap;
+  overflow:hidden;
+}
+.QuestProgress-meta {
+  border-bottom:1px solid rgba(232,227,213,.3);
+  padding:0 2px 5px;
+}
+.QuestProgress-track { margin-bottom:14px; }
