@@ -464,7 +464,6 @@ body {
 
 
 /* Skyrim-style condensed UI type: closest practical web-safe match to Futura Condensed. */
-@import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;500;700&family=Cinzel:wght@500;600;700&display=swap");
 body, button, input, textarea, .TodoList, .TodoItem, .TodoItem-checked {
   font-family: "Roboto Condensed", "Arial Narrow", sans-serif;
   font-weight: 400;
